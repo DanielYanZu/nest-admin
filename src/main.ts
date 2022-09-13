@@ -3,6 +3,7 @@ import {
   Logger,
   UnprocessableEntityException,
   ValidationPipe,
+  VersioningType,
 } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import {
@@ -18,6 +19,7 @@ import { setupSwagger } from './setup-swagger';
 import { LoggerService } from './shared/logger/logger.service';
 
 const PORT = process.env.PORT;
+const PREFIX = process.env.PREFIX;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -28,8 +30,14 @@ async function bootstrap() {
     },
   );
   app.enableCors();
+  // 给接口增加版本号，如果兼容用VERSION_NEUTRAL
+  app.enableVersioning({
+    // defaultVersion: [VERSION_NEUTRAL, '1'],
+    defaultVersion: '1',
+    type: VersioningType.URI,
+  });
   // 给请求添加prefix
-  // app.setGlobalPrefix(PREFIX);
+  app.setGlobalPrefix(PREFIX);
   // custom logger
   app.useLogger(app.get(LoggerService));
   // validate
@@ -61,7 +69,7 @@ async function bootstrap() {
   await app.listen(PORT, '0.0.0.0');
   const serverUrl = await app.getUrl();
   Logger.log(`api服务已经启动,请访问: ${serverUrl}`);
-  Logger.log(`API文档已生成,请访问: ${serverUrl}/${process.env.DOCS_PREFIX}/`);
+  Logger.log(`API文档已生成,请访问: ${serverUrl}/${process.env.DOCS_PREFIX}`);
   Logger.log(
     `ws服务已经启动,请访问: http://localhost:${process.env.WS_PORT}${process.env.WS_PATH}`,
   );

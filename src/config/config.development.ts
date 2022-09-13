@@ -30,7 +30,7 @@ export default {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
     synchronize: true,
-    logging: false,
+    logging: true,
     timezone: '+08:00', // 东八区
   } as DataSourceOptions,
   redis: {
@@ -47,5 +47,10 @@ export default {
     bucket: 'xxx',
     zone: qiniu.zone.Zone_z0,
     access: 'public',
+  },
+  swagger: {
+    title: 'nest-admin docs',
+    desc: 'about nest-admin docs',
+    path: 'swagger',
   },
 };

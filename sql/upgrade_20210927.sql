@@ -10,7 +10,7 @@ CREATE TABLE `sys_config` (
   `value` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `IDX_2c363c25cf99bcaab3a7f389ba` (`key`)
+  UNIQUE KEY `IDX_key` (`key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 BEGIN;
